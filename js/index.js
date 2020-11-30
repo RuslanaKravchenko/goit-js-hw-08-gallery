@@ -41,7 +41,7 @@ function createGalleryItem(cards) {
 
   return fragment;
 
-  // const markup = cards.reduce((acc, card) => {
+  // const markup = cards.reduce((acc, card, index = 0) => {
   //   acc += `
   //     <li class="gallery__item">
   //   <a
@@ -53,6 +53,7 @@ function createGalleryItem(cards) {
   //       src= ${card.preview}
   //       data-source= ${card.original}
   //       alt= '${card.description}'
+  //       data-index = ${index}
   //     />
   //   </a>
   // </li>`;
