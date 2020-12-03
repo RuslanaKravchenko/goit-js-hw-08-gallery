@@ -8,62 +8,20 @@ const refs = {
   closeModalBtn: document.querySelector(
     'button[ data-action="close-lightbox"]',
   ),
-  galleryItem: '',
-  galleryLink: '',
-  galleryIMG: '',
 };
 
 let currentIndex = 0;
 
 //============== Создаем разметку =============
-function createGalleryItem(cards) {
-  const fragment = document.createDocumentFragment();
 
-  cards.forEach(({ preview, original, description }, index = 0) => {
-    refs.galleryIMG = document.createElement('img');
-    refs.galleryIMG.classList.add('gallery__image');
-    refs.galleryIMG.setAttribute('src', preview);
-    refs.galleryIMG.setAttribute('alt', description);
-    refs.galleryIMG.setAttribute('data-source', original);
-    refs.galleryIMG.setAttribute('data-index', index);
+const createGalleryItem = ({ original, preview, description }, index = 0) =>
+  `<li class="gallery__item">
+<a class="gallery__link" href="${original}"><img class="gallery__image" src="${preview}" data-source="${original}" data-index="${index}" alt="${description}"></a>
+</li>`;
 
-    refs.galleryLink = document.createElement('a');
-    refs.galleryLink.classList.add('gallery__link');
-    refs.galleryLink.setAttribute('href', original);
+const item = cards.map(createGalleryItem).join('');
 
-    refs.galleryItem = document.createElement('li');
-    refs.galleryItem.classList.add('gallery__item');
-
-    refs.galleryLink.appendChild(refs.galleryIMG);
-    refs.galleryItem.appendChild(refs.galleryLink);
-    fragment.appendChild(refs.galleryItem);
-  });
-
-  return fragment;
-
-  // const markup = cards.reduce((acc, card, index = 0) => {
-  //   acc += `
-  //     <li class="gallery__item">
-  //   <a
-  //     class="gallery__link"
-  //     href= ${card.original}
-  //   >
-  //     <img
-  //       class="gallery__image"
-  //       src= ${card.preview}
-  //       data-source= ${card.original}
-  //       alt= '${card.description}'
-  //       data-index = ${index}
-  //     />
-  //   </a>
-  // </li>`;
-  //   return acc;
-  // }, '');
-  // return (refs.gallery.innerHTML = markup);
-}
-// createGalleryItem(cards);
-
-refs.gallery.appendChild(createGalleryItem(cards));
+refs.gallery.insertAdjacentHTML('afterbegin', item);
 
 // ==================================================
 refs.gallery.addEventListener('click', onGalleryClick);
